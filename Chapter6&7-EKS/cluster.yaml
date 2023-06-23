@@ -1,0 +1,48 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: aws-containers-eks
+  region: us-west-2
+  version: "1.25"
+  tags:
+    karpenter.sh/discovery: aws-containers-eks # here, it is set to the cluster name
+# IAM OIDC  
+iam:
+  withOIDC: true 
+# managed node group   
+managedNodeGroups:
+  - name: ng-1
+    instanceType: m5.xlarge
+    desiredCapacity: 2
+    minSize: 2
+    maxSize: 4
+    volumeSize: 100
+    labels: 
+      eks/node-type: cpu
+# self managed node group   
+nodeGroups:
+  - name: ng-gpu
+    instanceType: g4dn.12xlarge
+    desiredCapacity: 1
+    volumeSize: 100
+    labels: 
+      nvidia.com/gpu.present: true
+      eks/node-type: gpu
+      eks/gpu-type: nvidia
+    taints:
+      - key: nvidia.com/gpu
+        value: "true"
+        effect: NoSchedule
+
+karpenter:
+  version: 'v0.27.3' # Exact version must be specified
+  createServiceAccount: true # default is false
+  defaultInstanceProfile: 'KarpenterNodeInstanceProfile' # default is to use the IAM instance profile created by eksctl
+  withSpotInterruptionQueue: true # adds all required policies and rules for supporting Spot Interruption Queue, default is false
+#EKS add-ons
+addons:
+  - name: vpc-cni
+  - name: coredns
+  - name: aws-ebs-csi-driver
+  - name: kube-proxy
