@@ -1,6 +1,8 @@
 # Ebook: Running-Containers-on-AWS
 -Building Scalable and Resilient Containerized Applications with Continuous Delivery and Infrastructure as Code    
 
+![](img/ebook-cover.png)
+
 ## Book Description
 Running containers in AWS provides the added benefit of leveraging the power of the AWS cloud while taking advantage of the benefits of containers technology. By mastering AWS container services like Amazon ECS, EKS, and Fargate, you can streamline your development and deployment processes and deliver reliable, scalable applications.
 By supporting portability, consistency and efficiency, Containers technology becomes a valuable tool for organizations that need to develop and deploy applications quickly and reliably across different environments. Additionally, the rise of cloud computing and microservices architectures has increased the demand for containers as a way to manage and orchestrate complex distributed systems.
